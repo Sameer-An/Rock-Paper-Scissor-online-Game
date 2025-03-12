@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors - Online Multiplayer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="game-title">
+            <h1>Rock Paper Scissors</h1>
+            <p class="subtitle">Two Player Online Battle</p>
+        </div>
+
+        <!-- Initial Screen - Join Game -->
+        <div id="join-screen" class="screen active">
+            <div class="screen-content">
+                <h2>Enter Your Name</h2>
+                <input type="text" id="player-name" placeholder="Your Name" maxlength="15">
+                <div class="join-options">
+                    <button id="create-game" class="btn primary-btn">Create Game</button>
+                    <button id="join-game-btn" class="btn secondary-btn">Join Game</button>
+                </div>
+                <div id="join-game-form" class="hidden">
+                    <input type="text" id="game-code" placeholder="Enter Game Code">
+                    <button id="join-game-submit" class="btn primary-btn">Join</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Waiting Screen -->
+        <div id="waiting-screen" class="screen">
+            <div class="screen-content">
+                <h2>Waiting for Opponent</h2>
+                <div class="loader"></div>
+                <div class="game-code-display">
+                    <p>Share this code with your opponent:</p>
+                    <div class="code-container">
+                        <span id="game-code-display"></span>
+                        <button id="copy-code" class="btn icon-btn" title="Copy game code"><i class="fas fa-copy"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="screen">
+            <div class="screen-content">
+                <div class="game-info">
+                    <div class="player-info">
+                        <span id="player-name-display">You</span>
+                        <span id="player-score">0</span>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="player-info">
+                        <span id="opponent-name-display">Opponent</span>
+                        <span id="opponent-score">0</span>
+                    </div>
+                </div>
+
+                <div class="round-info">
+                    <div id="round-number">Round 1</div>
+                    <div id="timer" class="hidden">
+                        <div class="timer-circle">
+                            <span id="countdown">4</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="choices-container">
+                    <button class="choice-btn" data-choice="rock">
+                        <i class="fas fa-hand-rock"></i>
+                        <span>Rock</span>
+                    </button>
+                    <button class="choice-btn" data-choice="paper">
+                        <i class="fas fa-hand-paper"></i>
+                        <span>Paper</span>
+                    </button>
+                    <button class="choice-btn" data-choice="scissors">
+                        <i class="fas fa-hand-scissors"></i>
+                        <span>Scissors</span>
+                    </button>
+                </div>
+
+                <div class="status-message">Choose your weapon!</div>
+
+                <div class="result-display hidden">
+                    <div class="result-choices">
+                        <div class="player-choice">
+                            <span>You chose:</span>
+                            <div id="player-choice-icon" class="result-icon"></div>
+                        </div>
+                        <div class="opponent-choice">
+                            <span>Opponent chose:</span>
+                            <div id="opponent-choice-icon" class="result-icon"></div>
+                        </div>
+                    </div>
+                    <div id="result-message" class="result-message"></div>
+                    <button id="next-round" class="btn primary-btn">Next Round</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen">
+            <div class="screen-content">
+                <h2 id="final-result">Game Over</h2>
+                <div class="final-score">
+                    <div class="player-final">
+                        <span id="final-player-name">You</span>
+                        <span id="final-player-score">0</span>
+                    </div>
+                    <div class="final-vs">:</div>
+                    <div class="opponent-final">
+                        <span id="final-opponent-name">Opponent</span>
+                        <span id="final-opponent-score">0</span>
+                    </div>
+                </div>
+                <button id="play-again" class="btn primary-btn">Play Again</button>
+                <button id="back-to-home" class="btn secondary-btn">Back to Home</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Notifications -->
+    <div id="notification" class="notification hidden">
+        <span id="notification-message"></span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
